@@ -1,18 +1,16 @@
-package com.hm;
+package com.hm.java8interface;
 
-import com.hm.lambda.DefaultFactory;
-import com.hm.lambda.DefaultImpl;
-import com.hm.lambda.OverrideImpl;
-import com.hm.lambda.inter.DefaultInterface;
+import com.hm.java8interface.inter.DefaultInterface;
 
-public class Main {
+/**
+ * Created by dumingwei on 2017/3/13.
+ */
+public class InterfaceTest {
 
-    public static void main(String[] args) {
+    public static void main(String args[]) {
         DefaultInterface defaultInterface = DefaultFactory.create(DefaultImpl::new);
         DefaultInterface overrideInterface = DefaultFactory.create(OverrideImpl::new);
         System.out.println(defaultInterface.sayHello());
         System.out.println(overrideInterface.sayHello());
     }
-
-
 }

@@ -1,4 +1,4 @@
-package com.hm.lambda.inter;
+package com.hm.java8interface.inter;
 
 /**
  * Created by dumingwei on 2017/3/13.
