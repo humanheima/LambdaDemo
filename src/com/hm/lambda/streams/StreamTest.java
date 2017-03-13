@@ -1,7 +1,8 @@
 package com.hm.lambda.streams;
 
-import java.util.*;
-import java.util.stream.Collectors;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.IntStream;
 
 /**
  * Created by dumingwei on 2017/3/13.
@@ -46,11 +47,17 @@ public class StreamTest {
          * limit
          * filter 和limit的调用顺序不一样，结果也不一样
          */
-      /*  System.out.println("只输出三个programmers");
+       /* System.out.println("只输出三个programmers");
         javaProgrammers.stream()
                 .filter(person -> "female".equals(person.getGender()))
                 .limit(3)
-                .forEach(p -> System.out.println(p.getFirstName()));*/
+                .forEach(p -> System.out.println(p.getFirstName()));
+
+        List<Integer>integers= IntStream.rangeClosed(1,10)
+                .filter(i->i%2==0)
+                .boxed()
+                .collect(Collectors.toList());
+        System.out.println(integers);*/
 
         /**
          * sorted collect max min
@@ -96,6 +103,23 @@ public class StreamTest {
         stringSet.forEach(System.out::println);*/
 
         /**
+         * flatMap
+         */
+        /*String poetry = "Where, before me, are the ages that have gone?\n" +
+                "And where, behind me, are the coming generations?\n" +
+                "I think of heaven and earth, without limit, without end,\n" +
+                "And I am all alone and my tears fall down.";
+        Stream<String> lines = Arrays.stream(poetry.split("\n"));
+        Stream<String> words = lines.flatMap(line -> Arrays.stream(line.split(" ")));
+        List<String> stringList = words.map(w -> {
+            if (w.endsWith(",") || w.endsWith(".") || w.endsWith("?")) {
+                return w.substring(0, w.length() - 1).trim().toLowerCase();
+            } else {
+                return w.trim().toLowerCase();
+            }
+        }).distinct().sorted().collect(Collectors.toList());
+        System.out.println(stringList);*/
+        /**
          * parallel stream
          */
        /* System.out.println("计算付给 Java programmers 的所有money:");
@@ -123,7 +147,7 @@ public class StreamTest {
         /**
          * groupingBy
          */
-        List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
+        /*List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
         Map<Integer, List<Integer>> map = numbers.stream()
                 .collect(Collectors.groupingBy((x) -> x % 3));
         System.out.println(map);
@@ -145,6 +169,82 @@ public class StreamTest {
                 .mapToInt(weight->(int)weight)
                 .mapToObj(percentage -> percentage + "%")
                 .collect(Collectors.toList());
-        System.out.println(result);
+        System.out.println(result);*/
+
+        /**
+         * distinct
+         */
+       /* List<Integer> integerList = Stream.of(1, 2, 3, 4, 4, 5, 5)
+                .distinct()
+                .collect(Collectors.toList());
+        System.out.println(integerList);
+*/
+        /**
+         * peek 使用一个Consumer消费流中的元素，但是返回的流还是包含原来的流中的元素。
+         */
+       /* String[] arr = new String[]{"a", "b", "c", "d"};
+        long count = Arrays.stream(arr)
+                .peek(System.out::println)
+                .count();
+        System.out.println(count);*/
+
+        /**
+         * skip 返回丢弃了前n个元素的流，如果流中的元素小于或者等于n，则返回空的流。
+         */
+        /*String[] arr = new String[]{"a", "b", "c", "d"};
+        long num = Arrays.stream(arr)
+                .skip(2)
+                .count();
+        System.out.println(num);*/
+
+        /**
+         * Match
+         public boolean 	allMatch(Predicate<? super T> predicate)
+         public boolean 	anyMatch(Predicate<? super T> predicate)
+         public boolean 	noneMatch(Predicate<? super T> predicate)
+         allMatch只有在所有的元素都满足断言时才返回true,否则flase,流为空时总是返回true
+         anyMatch只有在任意一个元素满足断言时就返回true,否则flase,
+         noneMatch只有在所有的元素都不满足断言时才返回true,否则flase,
+         */
+        /*System.out.println(Stream.of(1, 2, 3, 4).allMatch(i -> i > 0));
+        System.out.println(Stream.of(1, 2, 3, 4).anyMatch(i -> i > 0));
+        System.out.println(Stream.of(1, 2, 3, 4).noneMatch(i -> i > 0));
+
+        System.out.println(IntStream.empty().allMatch(i -> i > 0));
+        System.out.println(IntStream.empty().anyMatch(i -> i > 0));
+        System.out.println(IntStream.empty().noneMatch(i -> i > 0));*/
+
+        /**
+         * find
+         */
+       /* Optional<Integer> optional = Stream.of(1, 2, 3, 4, 5)
+                .findAny();
+        System.out.println(optional.isPresent());
+        System.out.println(optional.orElseGet(() -> 100));
+        System.out.println(optional.map(s -> s * 10).orElse(100));*/
+       /* Optional<Integer> total = Stream.of(1, 2, 3, 4, 5)
+                .reduce((x, y) -> x + y);
+        Integer totalAnother = Stream.of(1, 2, 3, 4, 5)
+                .reduce(15, (x, y) -> x + y);
+        System.out.println(total.get());
+        System.out.println(totalAnother);*/
+
+        /**
+         * toArray
+         */
+       /* int intArrays[] = IntStream.of(1, 2, 3, 4, 5).toArray();
+        for (Integer intArray : intArrays) {
+            System.out.println(intArray);
+        }*/
+
+        /**
+         * concat
+         * 用来连接类型一样的两个流。
+         */
+        IntStream intStream1 = IntStream.of(1, 2, 3, 4, 5);
+        IntStream intStream2 = IntStream.of(6, 7, 8, 9, 10);
+        IntStream.concat(intStream1, intStream2)
+                .forEach(System.out::println);
+
     }
 }
